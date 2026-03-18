@@ -19,7 +19,7 @@ Getting Started
 Clone the project.
 ```bash
     cd ~/colcon_ws/src
-    git clone https://github.com/ESOGU-SRLAB/ESOGU-DualRobot.git
+    git clone https://github.com/ESOGU-SRLAB/ESOGU-HARMONY.git
 ```
 Move the files coming to the ESOGU-HILTest-DualRobot cluster to the /src directory.
 
@@ -35,12 +35,30 @@ build the workspace
     colcon build
     source install/setup.bash
 ```
-UR10e robot with 2FG14 Gripper 
+Launch HIL Test System for IFARLAB environment
 
 ```bash
-  ros2 launch my_robot_cell_gz gripperrobot_ifarlab_gazebo.launch.py use_gripper:=true
+  ros2 launch my_robot_cell_control hil_test.launch.py use_fake_hardware:=true
 ```
-<img width="1911" height="948" alt="Screenshot from 2026-02-10 13-30-14" src="https://github.com/user-attachments/assets/18b3f464-3197-4398-b9a1-250a99f3ba74" />
+
+Start the sensing&cleaning robot setup
+
+```bash
+  ros2 launch my_robot_cell_control sensing_and_cleaning_mission_v3.launch.py 
+```
+
+Start the sensing robot with the command below
+
+```bash
+  ros2 topic pub --once /harmony/cmd_input std_msgs/msg/String '{"data": "{\"cmd\": \"start\"}"}'
+```
+
+Start the cleaning robot with the command below
+
+```bash
+  ros2 topic pub --once /harmony/cmd_input std_msgs/msg/String '{"data": "{\"cmd\": \"CONFIRM\"}"}'
+```
+
 
 
   
